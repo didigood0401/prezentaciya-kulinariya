@@ -15,8 +15,8 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;background:#0d0a08;color:var(--cream);font-family:var(--sans);overflow:hidden}
-.stage{position:fixed;inset:0;display:grid;place-items:center}
-.deck{width:1600px;height:900px;position:relative;transform-origin:center;flex:none}
+.stage{position:fixed;inset:0;overflow:hidden}
+.deck{width:1600px;height:900px;position:absolute;left:50%;top:50%;transform-origin:center;}
 .slide{position:absolute;inset:0;background:var(--ink);overflow:hidden;opacity:0;visibility:hidden;transition:opacity .7s var(--ease),visibility 0s .7s;padding:96px 120px}
 .slide.on{opacity:1;visibility:visible;transition:opacity .7s var(--ease)}
 .slide.light{background:var(--cream);color:var(--ink)}
@@ -318,7 +318,7 @@ p.lead{font-size:28px;line-height:1.45;color:var(--cream2);max-width:760px}
 <div class="ctrl"><button id="prev" aria-label="Назад">←</button><span id="num">01 / 10</span><button id="next" aria-label="Вперёд">→</button></div>
 <script>
 const deck=document.getElementById('deck'),S=[...document.querySelectorAll('.slide')];let i=0;
-function fit(){const k=Math.min(innerWidth/1600,innerHeight/900);deck.style.transform='scale('+k+')'}
+function fit(){const k=Math.min(innerWidth/1600,innerHeight/900);deck.style.transform="translate(-50%,-50%) scale("+k+")"}
 addEventListener('resize',fit);fit();
 function count(s){s.querySelectorAll('.cnt').forEach(e=>{const to=+e.dataset.to,t0=performance.now();(function f(t){const p=Math.min(1,(t-t0)/1600),v=Math.round(to*(1-Math.pow(1-p,3)));e.textContent=v;if(p<1)requestAnimationFrame(f)})(t0)})}
 function go(n){n=Math.max(0,Math.min(S.length-1,n));S[i].classList.remove('on');i=n;const s=S[i];
